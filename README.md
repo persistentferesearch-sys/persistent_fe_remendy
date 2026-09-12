@@ -1,0 +1,64 @@
+# Revisiting the Missing R&D-Patent Relation: Challenges and Solutions for Firm Fixed Effects Models
+The repository provides detailed examples and code that follow the paper *Revisiting the Missing R\&D-Patent Relation: Challenges and Solutions for Firm Fixed Effects Models*. 
+
+In this set of code, we demonstrate how users can implement the following four ways to identify the potential bias from fixed effects regressions: 
+  1. Linear regression and Poisson regression with and without firm FEs
+  2. Within, Between, and Overall R-squared
+  2. Adjusted Hausman-Taylor approach
+  4. Post-regularization LASSO (PRL) and Double Machine Learning (DML) methods for both linear and Poisson regression
+
+## Data and Code Availability:
+We have prepared the following documents:
+  1. `Replicate_code_MissingRDPatent_ML.do` contains the STATA code that produces our main results in the paper;
+  2. `Replicate_data_MissingRDPatent_ML.dta` contains the dataset used in the paper.
+  3. `panelr2.ado` calculates overall, between, and within R-squared after estimation.
+ 
+**Sample Data Construction**
+* PERMCO here is a masked firm identifier.
+* Variable definitions are as follows, and interested readers are referred to our paper and the original data sources to collect them.
+  - patent:     Number of patents (data from USPTO PatentsView)
+  - lnnpatent:  The logarithm of one plus the number of patents (data from USPTO PatentsView)
+  - RDAT:       Research and development (R&D) expenses scaled by the total assets (data from Compustat)
+  - lnME:       The logarithm of market equity (data from CRSP)  
+  - RD_missing: A binary variable indicating that R&D expenses are missing (data from Compustat)
+  - lnAge:      The logarithm of years where a firm exists in Compustat (data from Compustat)
+  - lnK2L:      The logarithm of net property, plant, and equipment divided by the number of employees(data from Compustat)
+  - TobinQ:      The market value of a firm divided by its replacement cost (data from Compustat and CRSP)
+  - ROA:        Return on assets (data from Compustat)
+  - Leverage:   Long-term debt plus current debt, divided by total assets (data from Compustat)
+  - CASHAT:    Cash to the total assets  (data from Compustat)
+  - KZidx:      The financial constraint index (data from Compustat)
+  - Instown:    The total institutional ownership from 13f filings divided by the total number of shares outstanding (data from CRSP and Thomson/Refinitiv)
+  - oms_HHidx:  One minus the Herfindahl-Hirschman index (HHI) based on three-digit industry classification (data from Compustat)
+  - oms_HHidx_square: Square of oms_HHidx (data from Compustat)
+
+
+**Results for Sample Data**
+* Depends on computer capacity; we also provide results and corresponding STATA log files.
+  * Log files:
+    - ReplicateLog_OLS_FE_adjHT
+    - ReplicateLog_PRL_Linear
+    - ReplicateLog_DML_Linear
+    - ReplicateLog_Poisson_FE
+    - ReplicateLog_PRL_Poisson
+    - ReplicateLog_DML_Poisson
+      
+  * csv files:
+    - FE_OLS_adjHT_estimates.csv
+    - PRL_Linear_estimates.csv
+    - DML_Linear_estimates.csv
+    - Poisson_FE_estimates.csv
+    - PRL_Poisson_estimates.csv
+    - DML_Poisson_estimates.csv
+
+**Software**
+- The STATA version to fully implement the replicate code is: STATA 17.
+- The LASSO inference approaces: `poregress`, `xporegress`, `popoisson`, and `xpopoisson` are available since STATA 16.
+  The cluster standard error for those methods are only available since STATA 17. 
+  The robust standard error can still be used for those methods in STATA 16.
+- The following commands may need to be installed and updated on STATA to run the replicate code: `reghdfe`, `ppmlhdfe`, and `esttab`.
+- To export the R squared values correctly to a CSV file, copy `panelr2.ado` to `C:\Users\yourPC\ado\personal\` folder, and then update esttab by running `ssc install estout, replace` command in STATA.
+    
+## Contact
+**Please see the paper for more information. If you use these datasets, please CITE this paper as the data source.
+
